@@ -24,7 +24,7 @@ function MovieList() {
             type: 'SET_DETAIL',//need to create a saga for this
             payload: movie
         })
-        //history.pushState('/details')//details page
+        history.push('/details')//details page
     }
 
     // return(
