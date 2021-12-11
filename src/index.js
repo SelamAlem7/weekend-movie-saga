@@ -26,8 +26,24 @@ function* fetchAllMovies() {
     } catch {
         console.log('get all error');
     }
-        
 }
+
+const selectedMovie = (state = {}, action) => {
+    switch (action.type) {
+      case 'SET_SELECTED_MOVIE':
+        return action.payload;
+      default:
+        return state;
+    }
+  }
+
+
+
+
+
+
+
+
 
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
