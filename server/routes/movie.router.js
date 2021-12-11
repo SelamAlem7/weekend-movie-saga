@@ -18,19 +18,45 @@ router.get('/', (req, res) => {
 
 
 
+// router.get('/:id', (req, res) => {
+//   const movieId = req.params.id;
+//   const sqlText = `
+//     SELECT "movies".title, "movies".poster, "movies".description FROM "movies"
+//       WHERE "movies".id = $1;
+//     `;
+//   pool
+//     .query(sqlText, [movieId])
+//     .then((result) => {
+//       res.send(result.rows);
+//     })
+//     .catch((error) => {
+//       console.log('Error', error);
+//       res.sendStatus(500);
+//     });
+// });
+
 router.get('/:id', (req, res) => {
+  //console.log('in get', req.params.id);
   const movieId = req.params.id;
-  const sqlText = `
-    SELECT "movies".title, "movies".poster, "movies".description FROM "movies"
-      WHERE "movies".id = $1;
-    `;
+  const sqlText = `SELECT
+      "movies".id,
+      "movies".title,
+      "movies".poster,
+      "movies".description,
+      ARRAY_AGG("genres".name) 
+    FROM "movies_genres"
+    JOIN "movies" ON "movies_genres".movie_id = "movies".id
+    JOIN "genres" ON "movies_genres".genre_id = "genres".id
+    WHERE "movies".id = $1
+    GROUP BY "movies".id;`;
+    // accepts a set of values and returns an array in which each value in the set 
   pool
     .query(sqlText, [movieId])
-    .then((result) => {
-      res.send(result.rows);
+    .then((dbRes) => {
+      res.send(dbRes.rows);
     })
     .catch((error) => {
-      console.log('Error', error);
+      console.log('Error in get query', error);
       res.sendStatus(500);
     });
 });

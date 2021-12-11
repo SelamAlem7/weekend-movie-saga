@@ -6,7 +6,7 @@ function MovieDetail() {
     const history = useHistory();
 
     const movieDetail = useSelector(store => store.selectedMovie);
-    console.log(movieDetail);
+    console.log('movie detail:', movieDetail);
 
     const handleBackToListButton = () => {
         history.push('/')
@@ -28,6 +28,7 @@ function MovieDetail() {
     return(
     <div>
         <div>
+
         <img src={movieDetail[0].poster} alt={movieDetail[0].title}/>
         </div>
 
