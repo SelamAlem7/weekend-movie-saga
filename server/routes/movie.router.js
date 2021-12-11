@@ -16,23 +16,24 @@ router.get('/', (req, res) => {
 
 });
 
-router.get('/:id', (req, res) => {
 
-  const query = `SELECT * FROM "movies".title, "movies".description, "movies".poster 
-                          FROM "movies" WHERE "movies".id =$1`;
-    
-  pool.query(query, req.params.id)
-    .then( result => {
+
+router.get('/:id', (req, res) => {
+  const movieId = req.params.id;
+  const sqlText = `
+    SELECT "movies".title, "movies".poster, "movies".description FROM "movies"
+      WHERE "movies".id = $1;
+    `;
+  pool
+    .query(sqlText, [movieId])
+    .then((result) => {
       res.send(result.rows);
     })
-    .catch(err => {
-      console.log('ERROR: Get all movies', err);
-      res.sendStatus(500)
-    })
-
+    .catch((error) => {
+      console.log('Error', error);
+      res.sendStatus(500);
+    });
 });
-
-
 
 
 
