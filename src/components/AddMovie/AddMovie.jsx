@@ -1,18 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 
 
 function AddMovie() {
     const dispatch = useDispatch();
+    const history = useHistory();
+
+    useEffect(() => {
+        dispatch({
+            type: 'FETCH_GENRES',
+        })
+      }, []);
 
     let [newMovie, setNewMovie] = useState('');
+
+    const genres = useSelector((store) => store.genres);
+      console.log('all genres here', genres);
 
 
     const handleAddMovieButton = () => {
         console.log('new movie is:', newMovie);
-        dispatch({ type: 'ADD_MOVIE', payload: { name, owner_id }});
+        dispatch({ type: 'ADD_MOVIE', payload: { newMovie, owner_id }});
       };
+
+    const handleCancelButton = () => {
+        history.push('/')
+    }
+
+
 
 
 
@@ -24,22 +41,19 @@ function AddMovie() {
             <input placeholder='Movie Poster Img URL'></input>
             <textarea rows="10" cols="50"> </textarea>
 
-            <label for="movies">Choose a genre:</label>
-                    <select name="movies" id="movies">
-                    <option value="Adventure">Adventure</option>
-                    <option value="Animated">Animated</option>
-                    <option value="Biographical">Biographical</option>
-                    <option value="Comedy">Comedy</option>
-                    <option value="Disaster">Disaster</option>
-                    <option value="Drama">Drama</option>
-                    <option value="Epic">Epic</option>
-                    <option value="Fantasy">Fantasy</option>
-                    <option value="Musical">Musical</option>
-                    <option value="Romantic">Romantic</option>
-                    <option value="Science Fiction">Science Fiction</option>
-                    <option value="Space-Opera">Space</option>
-                    <option value="Superhero">Superhero</option>
-                    </select>
+            <label>Choose a genre:</label>
+            <select> {genres.map((genre)=>{
+                return (
+                <option value={genre.id}> {genre.name}</option>
+                )
+                
+            })} </select>
+
+                    
+                    
+
+                    <button onClick={handleAddMovieButton}>SAVE</button>
+                    <button onClick={handleCancelButton}>CANCEL</button>
 
         </div>
     )

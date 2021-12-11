@@ -17,7 +17,7 @@ function* rootSaga() {
     yield takeEvery('SET_DETAIL', fetchDetail);
     yield takeEvery('ADD_MOVIE', addMovie);
     // CREATING ROOTSAGE FOR GENERA
-    //yield takeEvery('SET_GENRES', fetchGenres);
+    yield takeEvery('FETCH_GENRES', fetchAllGenres);
 }
 
 function* addMovie(action){
@@ -70,6 +70,18 @@ const selectedMovie = (state = {}, action) => {
     }
 }
 
+
+function* fetchAllGenres() {
+    // get all movies from the DB
+    try {
+        const genres = yield axios.get('/api/genre');
+        console.log('get all:', genres.data);
+        yield put({ type: 'SET_GENRES', payload: genres.data });
+
+    } catch {
+        console.log('get all genres error', );
+    }
+}
 
 
 

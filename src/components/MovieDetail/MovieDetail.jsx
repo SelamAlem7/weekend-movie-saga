@@ -12,12 +12,12 @@ function MovieDetail() {
         history.push('/')
     }
 
-    const getGenres = () => {
-        dispatch({
-            type:
-            payload:
-        })
-    }
+    // const getGenres = () => {
+    //     dispatch({
+    //         type:
+    //         payload:
+    //     })
+    // }
 
     
 
@@ -28,7 +28,6 @@ function MovieDetail() {
     return(
     <div>
         <div>
-
         <img src={movieDetail[0].poster} alt={movieDetail[0].title}/>
         </div>
 
