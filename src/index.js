@@ -15,8 +15,22 @@ import axios from 'axios';
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
     yield takeEvery('SET_DETAIL', fetchDetail);
-
+    yield takeEvery('ADD_MOVIE', addMovie);
+    // CREATING ROOTSAGE FOR GENERA
+    //yield takeEvery('SET_GENRES', fetchGenres);
 }
+
+function* addMovie(action){
+    try {
+        yield axios.post('/api/movie', action.payload);
+        yield put ({type: 'FETCH_MOVIES'});
+      } catch(err) {
+        console.log(err);
+      }
+}
+
+
+
 
 function* fetchAllMovies() {
     // get all movies from the DB

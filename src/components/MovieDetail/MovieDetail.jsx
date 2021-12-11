@@ -3,9 +3,21 @@ import { useHistory } from 'react-router-dom';
 
 
 function MovieDetail() {
+    const history = useHistory();
 
     const movieDetail = useSelector(store => store.selectedMovie);
     console.log(movieDetail);
+
+    const handleBackToListButton = () => {
+        history.push('/')
+    }
+
+    const getGenres = () => {
+        dispatch({
+            type:
+            payload:
+        })
+    }
 
     
 
@@ -14,16 +26,18 @@ function MovieDetail() {
 
 
     return(
-
+    <div>
         <div>
-         {movieDetail[0].title}
-         
-        <img src={movieDetail[0].poster}/>      
-       
-        {movieDetail[0].description}
 
+        <img src={movieDetail[0].poster} alt={movieDetail[0].title}/>
         </div>
 
+        <div>
+        {movieDetail[0].description}
+        {movieDetail[0].genres}
+        </div>
+        <button onClick={handleBackToListButton}>Back To List</button>
+    </div>
     )
 };
 
