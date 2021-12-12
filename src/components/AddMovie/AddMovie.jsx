@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
-
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
 
 function AddMovie() {
     const dispatch = useDispatch();
@@ -37,14 +41,9 @@ function AddMovie() {
                 poster: newPoster,
                 genre_id: newGenre
             }
-            
         })
+        history.push('/')
 
-
-
-
-
-        
       };
 
     const handleCancelButton = () => {
@@ -62,20 +61,20 @@ function AddMovie() {
             <input placeholder='Title' onChange={(event) => setNewTitle(event.target.value)}></input>
             <input placeholder='Movie Poster Img URL' onChange={(event) => setNewPoster(event.target.value)}></input>
             <textarea rows="10" cols="50" onChange={(event) => setNewDescription(event.target.value)}> </textarea>
-
-            <label>Choose a genre:</label>
-            <select onChange={(event) => setNewGenre(event.target.value)}> {genres.map((genre)=>{
+            <FormControl sx={{width:200, backgroundColor:"#E1BEE7"}} >
+<InputLabel>Choose a Genre</InputLabel>
+            <Select  value={newGenre} onChange={(event) => setNewGenre(event.target.value)}> {genres.map((genre)=>{
                 return (
-                <option value={genre.id}> {genre.name}</option>
+                    <MenuItem value={genre.id}> {genre.name}</MenuItem>
                 )
                 
-            })} </select>
+            })} </Select>
 
                     
-                    
+</FormControl>   
 
-                    <button onClick={handleAddMovieButton}>SAVE</button>
-                    <button onClick={handleCancelButton}>CANCEL</button>
+                    <Button onClick={handleAddMovieButton}>SAVE</Button>
+                    <Button onClick={handleCancelButton}>CANCEL</Button>
 
         </div>
     )
