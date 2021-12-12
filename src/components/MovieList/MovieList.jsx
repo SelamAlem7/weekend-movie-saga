@@ -35,12 +35,15 @@ function MovieList() {
     // )
     //------------------------------------------------------------
 
-
+    const handleButton = () => {
+        history.push('/AddMovie')
+    }
 
 
     return (
         <main>
             <h1>MovieList</h1>
+            <button onClick={handleButton}> Add New Movie!</button>
             <section className="movies">
                 {movies.map(movie => {
                     return (

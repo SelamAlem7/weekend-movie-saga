@@ -14,15 +14,37 @@ function AddMovie() {
         })
       }, []);
 
-    let [newMovie, setNewMovie] = useState('');
+    let [newTitle, setNewTitle] = useState('');
+    let [newDescription, setNewDescription] = useState('');
+    let [newPoster, setNewPoster] = useState('');
+    let [newGenre, setNewGenre] = useState('');
+
+
+
 
     const genres = useSelector((store) => store.genres);
       console.log('all genres here', genres);
 
 
     const handleAddMovieButton = () => {
-        console.log('new movie is:', newMovie);
-        dispatch({ type: 'ADD_MOVIE', payload: { newMovie, owner_id }});
+        console.log('new movie is:', newTitle,newDescription,newPoster, newGenre  );
+
+        dispatch({
+            type: 'ADD_MOVIE',
+            payload: {
+                title: newTitle,
+                description: newDescription,
+                poster: newPoster,
+                genre_id: newGenre
+            }
+            
+        })
+
+
+
+
+
+        
       };
 
     const handleCancelButton = () => {
@@ -37,12 +59,12 @@ function AddMovie() {
 
     return (
         <div>
-            <input placeholder='Title'></input>
-            <input placeholder='Movie Poster Img URL'></input>
-            <textarea rows="10" cols="50"> </textarea>
+            <input placeholder='Title' onChange={(event) => setNewTitle(event.target.value)}></input>
+            <input placeholder='Movie Poster Img URL' onChange={(event) => setNewPoster(event.target.value)}></input>
+            <textarea rows="10" cols="50" onChange={(event) => setNewDescription(event.target.value)}> </textarea>
 
             <label>Choose a genre:</label>
-            <select> {genres.map((genre)=>{
+            <select onChange={(event) => setNewGenre(event.target.value)}> {genres.map((genre)=>{
                 return (
                 <option value={genre.id}> {genre.name}</option>
                 )
